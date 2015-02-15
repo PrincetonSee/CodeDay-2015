@@ -12,6 +12,7 @@ import javax.swing.*;
 public class Client extends JFrame{//extends means inherits it's methods
 
 	private final int port; //a lot of the same stuff here, the only difference is we're finding a connection
+	public static String encryptedText;
 	private JTextField text;
 	private JTextField userName;
 	private JTextArea chatBox;
@@ -20,7 +21,30 @@ public class Client extends JFrame{//extends means inherits it's methods
 	private String message = "";
 	private String serverIP;
 	private Socket connection;
+	public static int key;
 	
+	public static String encrypt(String a){
+	         for(int i=0;i<a.length();i++){
+	           int shanku=a.charAt(i);
+	           shanku+=key;
+	           while(shanku>126){
+	               shanku-=93;
+	           }
+	           encryptedText+=(char)shanku;
+	       }
+	       return encryptedText;
+	    }
+	 public static int setCode(String balls){
+	        int sum=0;
+	        for(int i=0;i<=balls.length();i++){
+	            sum+=balls.length();
+	        }
+	        key = sum/balls.length();
+	        if(key==94){
+	            key=42;
+	        }
+	        return key;
+	    }
 	public Client(String host, int PORT) {//so here we have the constructor with an IP and and a port number 
 		super("ClassChat : Client");
 		port=PORT;
@@ -113,7 +137,7 @@ public class Client extends JFrame{//extends means inherits it's methods
 				showMessage("\nError receiving message! :(");
 			}
 		}
-		while(!message.equals(serverName+" - END"));
+		while(!message.equals(serverName+" - END")||!message.equals(serverName+" - FOE"));
 	}
 	public void close() {
 		showMessage("\nClosing connections...");
@@ -128,10 +152,21 @@ public class Client extends JFrame{//extends means inherits it's methods
 		}
 	}
 	public void sendMessage(String message) {
+		String newString = "";
 		try {
-			out.writeObject(userName.getText()+" - "+message);
-			out.flush();
-			showMessage("\n"+userName.getText()+" - "+message);
+			for(int i=0;i<message.length();i++){
+		          int charAtInt=message.charAt(i);
+		          charAtInt+=key;
+		          while(charAtInt>126){
+		        	  charAtInt-=94;
+		         }
+		         newString+=(char)charAtInt;
+		    }
+			System.out.println(newString);
+			out.writeObject(userName.getText()+" - "+newString);//the message is sent out
+			out.flush();//the message is "flushed" which is really just pushing all bits through like a pump. It wraps it up.
+			showMessage("\n"+userName.getText()+" - "+newString);
+			encryptedText = "";
 		}catch(IOException ioException){
 			chatBox.append("\nError sending message! :(");
 		}
@@ -140,7 +175,7 @@ public class Client extends JFrame{//extends means inherits it's methods
 		SwingUtilities.invokeLater(
 			new Runnable() {
 				public void run() {
-					chatBox.append(message);
+					chatBox.append(message);//this adds text to the text area
 				}
 			}
 		);
