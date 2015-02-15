@@ -175,19 +175,11 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	public void sendMessage(String message) {
 		String newString = "";
 		try {
-			for(int i=0;i<message.length();i++){
-		          int charAtInt=message.charAt(i);
-		          charAtInt+=key;
-		          while(charAtInt>126){
-		        	  charAtInt-=94;
-		         }
-		         newString+=(char)charAtInt;
-		    }
-			out.writeObject(userName.getText()+" - "+newString);//the message is sent out
+			newString = encrypt(userName.getText()+" - "+message);
+			out.writeObject(newString);//the message is sent out
 			out.flush();//the message is "flushed" which is really just pushing all bits through like a pump. It wraps it up.
-			showMessage("\n"+userName.getText()+" - "+newString);
-			showMessageDecrypted(encrypt("\r\n)" + userName.getText() + " - ") + newString);
-
+			showMessage("\r\n"+newString);
+			showMessageDecrypted("\r\n"+newString);
 		}catch(IOException ioException){
 			chatBox.append("\nError sending message! :(");
 		}
