@@ -11,7 +11,7 @@ public class ClientTest {
 	        int charAtInt=a.charAt(i);
 	        charAtInt+=Client.key;
 	        while(charAtInt>126){
-	        	charAtInt-=94;
+	        	charAtInt-=93;
 	        }
 	        newString+=(char)charAtInt;
 	    }
@@ -39,11 +39,14 @@ public class ClientTest {
 	        Client.key=42;
 	    }
 	}
+	
 	public static void main(String[] args) {
+		String keyTaker = JOptionPane.showInputDialog(null, "Enter Code: ");
+		setCode(keyTaker);	
+		
 		Client test;
 		boolean confirmedIP = false;
 		String IP = "127.0.0.1";
-		setCode("Crapola");	
         while(!confirmedIP) {
 			Object IPA = JOptionPane.showInputDialog(null, "Enter a valid IP address:", "IP ADDRESS", JOptionPane.QUESTION_MESSAGE);
 			if(!((String)IPA).isEmpty()) {

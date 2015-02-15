@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class CalebsEncryption {
     private static int key;
+    private static int sum=0;
     public static void main(String[] args) {
         // TODO code application logic here
     	Scanner scan = new Scanner(System.in);
@@ -11,9 +12,9 @@ public class CalebsEncryption {
         setCode(scan.nextLine());
         while(true){
             String currentLine=scan.nextLine();
-            String encrypted=encrypt(currentLine);
-            System.out.println(encrypted);
-            System.out.println(decrypt(encrypted));
+     //       String encrypted=encrypt(currentLine);
+     //       System.out.println("Encrypted: "+encrypted);
+            System.out.println("Decrypted: "+decrypt(currentLine));
         }
         
     }
@@ -23,26 +24,26 @@ public class CalebsEncryption {
             int shanku=a.charAt(i);
             shanku+=key;
             while(shanku>126){
-                shanku-=94;
+                shanku-=94;//originally 94
             }
             newString+=(char)shanku;
         }
         return newString;
     }
     public static String decrypt(String a){
-        String newString="";
+        String newString="";//Crass zelda #lskh
         for(int i=0;i<a.length();i++){
             int shanku=a.charAt(i);
             shanku-=key;
-            while(shanku<32){
-                shanku+=93;
+            while(shanku<32){//Here, he states the minimum ascii character (33=!) Meaning if it goes 
+                shanku+=94;//Make it 94, so it loops
             }
-            newString+=(char)shanku;
+            newString+=(char)shanku;//Build up chars to make string
         }
         return newString;
     }
     public static void setCode(String a){
-        int sum=0;
+        sum=0;
         for(int i=0;i<a.length();i++){
             sum+=a.charAt(i);
         }
@@ -50,7 +51,5 @@ public class CalebsEncryption {
         if(key==94){
             key=42;
         }
-        
-        System.out.println((char)key);
     }
 }
