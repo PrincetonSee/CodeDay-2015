@@ -214,6 +214,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		);
 	}
 	public String Decrypt(String message, int key){
+		System.out.println("");
 		String newString="";
         for(int i=0;i<message.length();i++){
             int shanku=message.charAt(i);
