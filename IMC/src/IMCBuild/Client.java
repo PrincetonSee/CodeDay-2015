@@ -133,7 +133,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	public void whileChat() throws IOException {
 		type(true);
 		showMessage("Chat Rules:\n\t+Your username MUST BE your real name\n\t+Do Not Troll, Spam, swear exessively or basically be an asshat");
-		showMessageDecrypted("This is the Decrypted Chat Box");
+		showMessageDecrypted("\nThis is the Decrypted Chat Box");
 		String serverName ="SERVER";
 		do {
 			try {
@@ -143,7 +143,6 @@ public class Client extends JFrame{ //extends means inherits it's methods
 				serverName=temp.next();
 				temp.close();
 				showMessage("\n"+message);
-				showMessageDecrypted("\n" + message);
 			}
 			catch(ClassNotFoundException classNotFoundException) {
 				showMessage("\nError receiving message! :(");
@@ -187,6 +186,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 			new Runnable() {
 				public void run() {
 					chatBox.append(message);//this adds text to the text area
+					decryptBox.append(Decrypt(message, key));
 				}
 			}
 		);
@@ -212,7 +212,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	}
 	public String Decrypt(String message, int key)
 	{
-		return message;
+		return message + "Done";
 	}
 	public void type(final boolean ToF){
 	SwingUtilities.invokeLater(
