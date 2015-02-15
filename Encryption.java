@@ -1,16 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package encryption;
 
 import java.util.Scanner;
 
-/**
- *
- * @author caleb
- */
 public class Encryption {
     private static int key;
     /**
@@ -23,8 +14,9 @@ public class Encryption {
         setCode(Shashank.nextLine());
         while(1!=2){
             String currentLine=Shashank.nextLine();
-            System.out.println(encrypt(currentLine));
-            System.out.println(decrypt(currentLine));
+            String encrypted=encrypt(currentLine);
+            System.out.println(encrypted);
+            System.out.println(decrypt(encrypted));
         }
     }
     public static String encrypt(String a){
