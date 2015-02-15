@@ -16,6 +16,9 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	private JTextField text;
 	private JTextField userName;
 	private JTextArea chatBox;
+	private JTextArea decryptBox;
+//	private Rectangle chatBoxGUI;
+//	private Rectangle decryptBoxGUI;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private String message = "";
@@ -49,6 +52,8 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		super("Chat : Client");
 		port=PORT;
 		serverIP=host;
+		setSize(400,250);
+		setVisible(true);
 		userName = new JTextField("User name",10);
 		userName.setEditable(true);
 		text = new JTextField();
@@ -61,11 +66,16 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		});
 		add(userName, BorderLayout.NORTH); //this adds to the JFrame and the second parameter moves things around
 		add(text, BorderLayout.SOUTH);
+//		chatBoxGUI = new Rectangle(0, 0, getWidth()/2, getHeight());
+//		decryptBoxGUI = new Rectangle(getWidth()/2 + 1, 0, getWidth()/2 + 1, getHeight());
 		chatBox = new JTextArea();
-		chatBox.setEditable(false);
-		add(new JScrollPane(chatBox));
-		setSize(500,500);
-		setVisible(true);
+		decryptBox = new JTextArea();
+		chatBox.add(new JScrollPane());
+		decryptBox.add(new JScrollPane());
+//		chatBox.setBounds(chatBoxGUI);
+		add(chatBox, BorderLayout.WEST);
+//		decryptBox.setBounds(decryptBoxGUI);
+		add(decryptBox, BorderLayout.EAST);
 	}
 	public void starting() {
 		showMessage("To close type \"END\" then exit out.");
@@ -123,6 +133,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	public void whileChat() throws IOException {
 		type(true);
 		showMessage("Chat Rules:\n\t+Your username MUST BE your real name\n\t+Do Not Troll, Spam, swear exessively or basically be an asshat");
+		showMessageDecrypted("This is the Decrypted Chat Box");
 		String serverName ="SERVER";
 		do {
 			try {
@@ -132,6 +143,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 				serverName=temp.next();
 				temp.close();
 				showMessage("\n"+message);
+				showMessageDecrypted("\n" + message);
 			}
 			catch(ClassNotFoundException classNotFoundException) {
 				showMessage("\nError receiving message! :(");
@@ -178,6 +190,29 @@ public class Client extends JFrame{ //extends means inherits it's methods
 				}
 			}
 		);
+	}
+	public void showMessageDecrypted(final String message){
+		SwingUtilities.invokeLater(
+			new Runnable() {
+				public void run() {
+					decryptBox.append(message);//this adds text to the text area
+				}
+			}
+		);
+	}
+	public void showMessageDecrypted(final String message, int key){
+//		final String m = Decrypt(message, key);
+		SwingUtilities.invokeLater(
+			new Runnable() {
+				public void run() {
+					decryptBox.append(message);//this adds text to the text area
+				}
+			}
+		);
+	}
+	public String Decrypt(String message, int key)
+	{
+		return message;
 	}
 	public void type(final boolean ToF){
 	SwingUtilities.invokeLater(
