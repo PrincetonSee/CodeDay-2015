@@ -44,7 +44,7 @@ public class MessageListener implements Runnable{
 			}catch(ClassNotFoundException classNotFoundException){
 				server.showMessage("\nError receiving message from ML! :(");
 			} catch (IOException e) {
-				server.showMessage("\nThe connection ended from ML, ERROR COMES FROM HERE" + e.toString());
+				server.showMessage("A client has closed his/her connection.");
 				return;
 			}
 		}while(!message.equals(clientName+" - END"));

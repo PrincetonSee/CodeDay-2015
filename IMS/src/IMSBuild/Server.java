@@ -128,7 +128,12 @@ public class Server extends JFrame{
 		{
 			if(s != soc)
 			{
-				send(s, text);
+				boolean disconnect = send(s, text, false);
+				if(disconnect)
+				{
+					connectionList.remove(s);
+					outputMap.remove(s);
+				}
 			}
 		}
 
@@ -139,8 +144,20 @@ public class Server extends JFrame{
 		try {
 			outputMap.get(soc).writeObject(text);
 		} catch (IOException e) {
-			e.printStackTrace();
+			sendToOthers("One or more connections have been disconnected.", soc);
+			return;
 		}
-
+	}
+		
+	public boolean send(Socket soc, String text, Boolean disconnected)
+	{
+		disconnected = false;
+		try {
+			outputMap.get(soc).writeObject(text);
+		} catch (IOException e) {
+			sendToOthers("One or more connections have been disconnected.", soc);
+			return true;
+		}
+		return disconnected;
 	}
 }
