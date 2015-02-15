@@ -29,8 +29,8 @@ public class MessageListener implements Runnable{
 			return;
 		}//this sets up your end of that "pipeline".
 		server.showMessage("\nStream setup is now made! \n");
-		server.showMessage("Chat Rules:\n\t+Your username MUST BE your real name\n\t+Do Not Troll, Spam, swear exessively or basically be an asshat");
-		String message = "Your now connected!";
+		server.showMessage("Chat Rules:\n\t+Your username MUST BE your real name\n\t+Do Not Troll, Spam, swear exessively or basically be a jerk");
+		String message = "Youre now connected!\n";
 		String clientName ="CLIENT";
 		do{//this uses a rare do-while (no one really uses them) but because we need to find out when to end it. This occurs via input.
 			try{
@@ -44,7 +44,7 @@ public class MessageListener implements Runnable{
 			}catch(ClassNotFoundException classNotFoundException){
 				server.showMessage("\nError receiving message from ML! :(");
 			} catch (IOException e) {
-				server.showMessage("A client has closed his/her connection.");
+				server.showMessage("\nA client has closed his/her connection.");
 				return;
 			}
 		}while(!message.equals(clientName+" - END"));

@@ -144,7 +144,7 @@ public class Server extends JFrame{
 		try {
 			outputMap.get(soc).writeObject(text);
 		} catch (IOException e) {
-			sendToOthers("One or more connections have been disconnected.", soc);
+			sendToOthers("One or more connections have been disconnected." + e.getMessage(), soc);
 			return;
 		}
 	}

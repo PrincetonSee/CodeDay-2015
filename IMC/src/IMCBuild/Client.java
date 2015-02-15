@@ -12,7 +12,6 @@ import javax.swing.*;
 public class Client extends JFrame{ //extends means inherits it's methods
 
 	private final int port; //a lot of the same stuff here, the only difference is we're finding a connection
-	public static String encryptedText;
 	private JTextField text;
 	private JTextField userName;
 	private JTextArea chatBox;
@@ -26,33 +25,47 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	private Socket connection;
 	public static int key;
 	
-	public static String encrypt(String a){
-	         for(int i=0;i<a.length();i++){
-	           int shanku=a.charAt(i);
-	           shanku+=key;
-	           while(shanku>126){
-	               shanku-=93;
-	           }
-	           encryptedText+=(char)shanku;
-	       }
-	       return encryptedText;
-	    }
-	 public static int setCode(String balls){
-	        int sum=0;
-	        for(int i=0;i<=balls.length();i++){
-	            sum+=balls.length();
-	        }
-	        key = sum/balls.length();
-	        if(key==94){
-	            key=42;
-	        }
-	        return key;
-	    }
+	
+    public static String encrypt(String a){
+        String newString="";
+        for(int i=0;i<a.length();i++){
+            int shanku=a.charAt(i);
+            shanku+=key;
+            while(shanku>126){
+                shanku-=94;
+            }
+            newString+=(char)shanku;
+        }
+        return newString;
+    }
+    public static String decrypt(String a){
+        String newString="";
+        for(int i=0;i<a.length();i++){
+            int shanku=a.charAt(i);
+            shanku-=key;
+            while(shanku<32){ 
+                shanku+=94;
+            }
+            newString+=(char)shanku;
+        }
+        return newString;
+    }
+    public static void setCode(String a){
+        int sum=0;
+        for(int i=0;i<a.length();i++){
+            sum+=a.charAt(i);
+        }
+        key= sum/a.length();
+        if(key==94){
+            key=42;
+        }
+    }
+	
 	public Client(String host, int PORT) {//so here we have the constructor with an IP and and a port number 
 		super("Chat : Client");
 		port=PORT;
 		serverIP=host;
-		setSize(400,250);
+		setSize(500,500);
 		setVisible(true);
 		userName = new JTextField("User name",10);
 		userName.setEditable(true);
@@ -69,7 +82,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 //		chatBoxGUI = new Rectangle(0, 0, getWidth()/2, getHeight());
 //		decryptBoxGUI = new Rectangle(getWidth()/2 + 1, 0, getWidth()/2 + 1, getHeight());
 		chatBox = new JTextArea();
-		decryptBox = new JTextArea();
+		decryptBox = new JTextArea(20, 20);
 		chatBox.add(new JScrollPane());
 		decryptBox.add(new JScrollPane());
 		
@@ -135,23 +148,26 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	//mostly everything else here is repetitive of the server class.
 	public void whileChat() throws IOException {
 		type(true);
-		showMessage("Chat Rules:\n\t+Your username MUST BE your real name\n\t+Do Not Troll, Spam, swear exessively or basically be an asshat");
-		showMessageDecrypted("\nThis is the Decrypted Chat Box");
+		showMessage("Chat Rules:\n\t+Your username MUST BE your real name\n\t+Do Not Troll, Spam, swear exessively or basically be a jerk");
+		showMessageDecrypted(encrypt("This is the Decrypted Chat Box\n"));
 		String serverName ="SERVER";
 		do {
 			try {
 				message = (String) in.readObject();
 				Scanner temp = new Scanner(message);
 				temp.useDelimiter(" - ");
-				serverName=temp.next();
+				//serverName=temp.next();
+				message = temp.next();
 				temp.close();
-				showMessage("\n"+message);
+				showMessageDecrypted("\r\n" + message);
+				showMessage("\r\n"+message);
 			}
 			catch(ClassNotFoundException classNotFoundException) {
 				showMessage("\nError receiving message! :(");
 			}
 		}
-		while(!message.equals(serverName+" - END")||!message.equals(serverName+" - FOE"));
+		//while(!message.equals(serverName+" - END")||!message.equals(serverName+encrypt("END")));
+		while(true);
 	}
 	public void close() {
 		showMessage("\nClosing connections...");
@@ -179,7 +195,8 @@ public class Client extends JFrame{ //extends means inherits it's methods
 			out.writeObject(userName.getText()+" - "+newString);//the message is sent out
 			out.flush();//the message is "flushed" which is really just pushing all bits through like a pump. It wraps it up.
 			showMessage("\n"+userName.getText()+" - "+newString);
-			encryptedText = "";
+			showMessageDecrypted(encrypt("\r\n)" + userName.getText() + " - ") + newString);
+
 		}catch(IOException ioException){
 			chatBox.append("\nError sending message! :(");
 		}
@@ -189,7 +206,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 			new Runnable() {
 				public void run() {
 					chatBox.append(message);//this adds text to the text area
-					decryptBox.append(Decrypt(message, key));
+					//decryptBox.append(decrypt(message));
 				}
 			}
 		);
@@ -198,33 +215,12 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		SwingUtilities.invokeLater(
 			new Runnable() {
 				public void run() {
-					decryptBox.append(message);//this adds text to the text area
+					decryptBox.append("\r\n" + decrypt(message));//this adds text to the text area
 				}
 			}
 		);
 	}
-	public void showMessageDecrypted(final String message, int key){
-//		final String m = Decrypt(message, key);
-		SwingUtilities.invokeLater(
-			new Runnable() {
-				public void run() {
-					decryptBox.append(message);//this adds text to the text area
-				}
-			}
-		);
-	}
-	public String Decrypt(String message, int key){
-		String newString="";
-        for(int i=0;i<message.length();i++){
-            int shanku=message.charAt(i);
-            shanku-=key;
-            while(shanku<32){ 
-                shanku+=94;
-            }
-            newString+=(char)shanku;
-        }
-        return newString;
-	}
+
 	public void type(final boolean ToF){
 	SwingUtilities.invokeLater(
 			new Runnable(){
