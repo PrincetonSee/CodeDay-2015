@@ -83,7 +83,7 @@ public class Server extends JFrame{
 			Socket connection = server.accept();//this will sit here until it gets a connection made.
 			connectionList.add(connection);
 			outputMap.put(connection, new ObjectOutputStream(connection.getOutputStream()));
-			send(connection, "You Are Now Connected!");
+			//send(connection, "You Are Now Connected!");
 			showMessage("\nConnected to "+connection.getInetAddress().getHostName());
 			Thread t = new Thread(new MessageListener(this, connection));
 			t.start();
