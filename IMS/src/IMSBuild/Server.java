@@ -25,7 +25,7 @@ public class Server extends JFrame{
 	private HashMap<Socket, ObjectOutputStream> outputMap;
 
 	public Server(int PORT){//since this is the server version, the constructors parameter is only a port, and not an IP.
-		super("ClassChat : Host");
+		super("Chat : Host");
 		threadList = new LinkedList<Thread>();
 		connectionList = new LinkedList<Socket>();
 		outputMap = new HashMap<Socket, ObjectOutputStream>();
@@ -45,7 +45,7 @@ public class Server extends JFrame{
 		chatBox = new JTextArea();
 		chatBox.setEditable(false);
 		add(new JScrollPane(chatBox));
-		setSize(400,250);
+		setSize(500,500);
 		setVisible(true);
 	}
 
