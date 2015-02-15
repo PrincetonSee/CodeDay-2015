@@ -16,8 +16,6 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	private JTextField userName;
 	private JTextArea chatBox;
 	private JTextArea decryptBox;
-//	private Rectangle chatBoxGUI;
-//	private Rectangle decryptBoxGUI;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private String message = "";
@@ -65,7 +63,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		super("Chat : Client");
 		port=PORT;
 		serverIP=host;
-		setSize(500,500);
+		setSize(700,500);
 		setVisible(true);
 		userName = new JTextField("User name",10);
 		userName.setEditable(true);
@@ -79,8 +77,6 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		});
 		add(userName, BorderLayout.NORTH); //this adds to the JFrame and the second parameter moves things around
 		add(text, BorderLayout.SOUTH);
-//		chatBoxGUI = new Rectangle(0, 0, getWidth()/2, getHeight());
-//		decryptBoxGUI = new Rectangle(getWidth()/2 + 1, 0, getWidth()/2 + 1, getHeight());
 		chatBox = new JTextArea();
 		decryptBox = new JTextArea(20, 20);
 		chatBox.add(new JScrollPane());
@@ -88,9 +84,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		
 		chatBox.setEditable(false);
 		decryptBox.setEditable(false);
-//		chatBox.setBounds(chatBoxGUI);
 		add(chatBox, BorderLayout.WEST);
-//		decryptBox.setBounds(decryptBoxGUI);
 		add(decryptBox, BorderLayout.EAST);
 	}
 	public void starting() {
@@ -145,7 +139,6 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		showMessage("\nStream setup is now made! \n");
 	}
 	
-	//mostly everything else here is repetitive of the server class.
 	public void whileChat() throws IOException {
 		type(true);
 		showMessage("Chat Rules:\n\t+Your username MUST BE your real name\n\t+Do Not Troll, Spam, swear exessively or basically be a jerk");
@@ -156,8 +149,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 				message = (String) in.readObject();
 				Scanner temp = new Scanner(message);
 				temp.useDelimiter(" - ");
-				//serverName=temp.next();
-				message = temp.next();
+				serverName=temp.next();
 				temp.close();
 				showMessageDecrypted("\r\n" + message);
 				showMessage("\r\n"+message);
@@ -166,8 +158,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 				showMessage("\nError receiving message! :(");
 			}
 		}
-		//while(!message.equals(serverName+" - END")||!message.equals(serverName+encrypt("END")));
-		while(true);
+		while(!message.equals(serverName+" - END")||!message.equals(serverName+encrypt("END")));
 	}
 	public void close() {
 		showMessage("\nClosing connections...");
