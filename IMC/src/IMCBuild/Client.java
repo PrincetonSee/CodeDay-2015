@@ -46,7 +46,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 	        return key;
 	    }
 	public Client(String host, int PORT) {//so here we have the constructor with an IP and and a port number 
-		super("ClassChat : Client");
+		super("Chat : Client");
 		port=PORT;
 		serverIP=host;
 		userName = new JTextField("User name",10);
@@ -162,7 +162,6 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		         }
 		         newString+=(char)charAtInt;
 		    }
-			System.out.println(newString);
 			out.writeObject(userName.getText()+" - "+newString);//the message is sent out
 			out.flush();//the message is "flushed" which is really just pushing all bits through like a pump. It wraps it up.
 			showMessage("\n"+userName.getText()+" - "+newString);

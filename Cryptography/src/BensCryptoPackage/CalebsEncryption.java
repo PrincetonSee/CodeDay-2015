@@ -6,14 +6,11 @@ public class CalebsEncryption {
     private static int key;
     private static int sum=0;
     public static void main(String[] args) {
-        // TODO code application logic here
     	Scanner scan = new Scanner(System.in);
     	System.out.print("Code? ");
         setCode(scan.nextLine());
         while(true){
             String currentLine=scan.nextLine();
-     //       String encrypted=encrypt(currentLine);
-     //       System.out.println("Encrypted: "+encrypted);
             System.out.println("Decrypted: "+decrypt(currentLine));
         }
         
@@ -24,14 +21,14 @@ public class CalebsEncryption {
             int shanku=a.charAt(i);
             shanku+=key;
             while(shanku>126){
-                shanku-=94;//originally 94
+                shanku-=94;
             }
             newString+=(char)shanku;
         }
         return newString;
     }
     public static String decrypt(String a){
-        String newString="";//Crass zelda #lskh
+        String newString="";
         for(int i=0;i<a.length();i++){
             int shanku=a.charAt(i);
             shanku-=key;
