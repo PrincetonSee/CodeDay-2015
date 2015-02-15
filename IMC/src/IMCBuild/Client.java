@@ -9,7 +9,7 @@ import java.awt.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class Client extends JFrame{//extends means inherits it's methods
+public class Client extends JFrame{ //extends means inherits it's methods
 
 	private final int port; //a lot of the same stuff here, the only difference is we're finding a connection
 	public static String encryptedText;
