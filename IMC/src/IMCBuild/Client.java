@@ -28,7 +28,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
         String newString="";
         for(int i=0;i<a.length();i++){
             int shanku=a.charAt(i);
-            shanku+=key;
+            shanku+=Client.key;
             while(shanku>126){
                 shanku-=94;
             }
@@ -40,23 +40,13 @@ public class Client extends JFrame{ //extends means inherits it's methods
         String newString="";
         for(int i=0;i<a.length();i++){
             int shanku=a.charAt(i);
-            shanku-=key;
+            shanku-=Client.key;
             while(shanku<32){ 
                 shanku+=94;
             }
             newString+=(char)shanku;
         }
         return newString;
-    }
-    public static void setCode(String a){
-        int sum=0;
-        for(int i=0;i<a.length();i++){
-            sum+=a.charAt(i);
-        }
-        key= sum/a.length();
-        if(key==94){
-            key=42;
-        }
     }
 	
 	public Client(String host, int PORT) {//so here we have the constructor with an IP and and a port number 
@@ -178,6 +168,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 			newString = encrypt(userName.getText()+" - "+message);
 			out.writeObject(newString);//the message is sent out
 			out.flush();//the message is "flushed" which is really just pushing all bits through like a pump. It wraps it up.
+			//showMessage("\r\n"+key);
 			showMessage("\r\n"+newString);
 			showMessageDecrypted("\r\n"+newString);
 		}catch(IOException ioException){
