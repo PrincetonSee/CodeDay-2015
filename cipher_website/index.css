@@ -1,0 +1,105 @@
+/*Start reseting*/
+
+html, body, div, span, applet, object, iframe, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+ul,li {
+  list-style: none;
+}
+
+/* End reseting*/
+
+body{
+  line-height: 1;
+  margin: 0px auto 10px auto;
+  width: 1080px;
+}
+
+html {
+  background: #DBFFF1
+}
+
+#logo img{
+  overflow: hidden;
+  min-width: 1080px;
+  min-height: 50px;
+  display: inline;
+}
+
+#logo img{
+  border: 0px;
+}
+
+
+#banner img {
+  max-height: 200px;
+  max-width: 1080px;
+}
+
+
+#menubar {
+  text-align: center;
+  width: 1080px;
+  font-size: 1.3em;
+  background: #b7b7b7;
+  overflow: hidden;
+  padding: 10px 0px 10px 0px;
+  -webkit-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  -moz-border-bottom-left-radius: 10px;
+  -moz-border-bottom-right-radius: 10px;
+}
+
+#menubar ul li {
+  position: relative;
+  display: inline;
+
+}
+
+#menubar li a {
+  text-decoration: none;
+  color: #191919;
+  font-weight: bold;
+  padding: 20px;
+}
+
+#menubar ul li a:hover {
+  background: #FF7e00;
+  color: blue;
+  font-weight: bold;
+}
+
+
+#main_container {
+  text-align: center;
+  font-size: 1.2em;
+  overflow; hidden;
+  margin: 15px 0px;
+}
+
+
+#footer {
+  overflow: hidden;
+  width: 1080px;
+}
+
+#footer p {
+  text-align: center;
+}
