@@ -64,7 +64,7 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		chatBox = new JTextArea();
 		chatBox.setEditable(false);
 		add(new JScrollPane(chatBox));
-		setSize(400,250);
+		setSize(500,500);
 		setVisible(true);
 	}
 	public void starting() {
