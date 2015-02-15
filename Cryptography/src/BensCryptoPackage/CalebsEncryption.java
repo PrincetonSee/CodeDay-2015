@@ -32,10 +32,10 @@ public class CalebsEncryption {
         for(int i=0;i<a.length();i++){
             int shanku=a.charAt(i);
             shanku-=key;
-            while(shanku<32){//Here, he states the minimum ascii character (33=!) Meaning if it goes 
-                shanku+=94;//Make it 94, so it loops
+            while(shanku<32){ 
+                shanku+=94;
             }
-            newString+=(char)shanku;//Build up chars to make string
+            newString+=(char)shanku;
         }
         return newString;
     }

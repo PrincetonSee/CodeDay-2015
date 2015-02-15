@@ -72,6 +72,9 @@ public class Client extends JFrame{ //extends means inherits it's methods
 		decryptBox = new JTextArea();
 		chatBox.add(new JScrollPane());
 		decryptBox.add(new JScrollPane());
+		
+		chatBox.setEditable(false);
+		decryptBox.setEditable(false);
 //		chatBox.setBounds(chatBoxGUI);
 		add(chatBox, BorderLayout.WEST);
 //		decryptBox.setBounds(decryptBoxGUI);
@@ -210,9 +213,17 @@ public class Client extends JFrame{ //extends means inherits it's methods
 			}
 		);
 	}
-	public String Decrypt(String message, int key)
-	{
-		return message + "Done";
+	public String Decrypt(String message, int key){
+		String newString="";
+        for(int i=0;i<message.length();i++){
+            int shanku=message.charAt(i);
+            shanku-=key;
+            while(shanku<32){ 
+                shanku+=94;
+            }
+            newString+=(char)shanku;
+        }
+        return newString;
 	}
 	public void type(final boolean ToF){
 	SwingUtilities.invokeLater(
